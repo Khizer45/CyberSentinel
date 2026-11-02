@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import io
 import time
 from typing import Any
+
+import joblib
 
 import numpy as np
 import pandas as pd
@@ -97,3 +100,10 @@ def stratified_indices(y: np.ndarray, n: int, seed: int, *, min_per_class: int =
         take = max(min_per_class, int(round(len(idx) * n / len(y))))
         chosen.append(rng.choice(idx, size=min(take, len(idx)), replace=False))
     return np.sort(np.concatenate(chosen))
+
+
+def serialized_size_bytes(obj: Any) -> int:
+    """Compressed joblib size of a fitted model (reported as "model size" in the comparisons)."""
+    buffer = io.BytesIO()
+    joblib.dump(obj, buffer, compress=3)
+    return buffer.getbuffer().nbytes

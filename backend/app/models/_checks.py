@@ -10,5 +10,5 @@ from sqlalchemy import CheckConstraint
 
 def in_values(column: str, values: Iterable[StrEnum | str], name: str) -> CheckConstraint:
     """``CHECK (column IN (...))`` with values quoted from a trusted enum (never user input)."""
-    quoted = ", ".join(f"'{str(value)}'" for value in values)
+    quoted = ", ".join(f"'{value!s}'" for value in values)
     return CheckConstraint(f"{column} IN ({quoted})", name=name)

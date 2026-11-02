@@ -105,6 +105,8 @@ class Settings(BaseSettings):
     job_workers: int = Field(default=2, ge=1, le=32)
     job_queue_max: int = Field(default=20, ge=1, le=1000)
     job_stale_after_seconds: int = Field(default=600, ge=30, le=86_400)
+    # "inline" executes jobs synchronously inside the request (automated tests only).
+    job_execution: Literal["background", "inline"] = "background"
     inference_batch_size: int = Field(default=5000, ge=100, le=200_000)
     explain_scope: Literal["alerts", "alerts_and_review", "all", "none"] = "alerts_and_review"
     explain_max_rows_per_job: int = Field(default=2000, ge=0, le=1_000_000)
@@ -164,7 +166,10 @@ class Settings(BaseSettings):
     def _strong_secret(cls, value: SecretStr) -> SecretStr:
         secret = value.get_secret_value()
         if len(secret) < 32:
-            raise ValueError("AUTH_SECRET must be at least 32 characters (generate one with `python -c \"import secrets; print(secrets.token_urlsafe(48))\"`)")
+            raise ValueError(
+                "AUTH_SECRET must be at least 32 characters "
+                '(generate one with `python -c "import secrets; print(secrets.token_urlsafe(48))"`)'
+            )
         if secret.lower().startswith(("change", "replace", "your-")):
             raise ValueError("AUTH_SECRET still contains the placeholder value from .env.example")
         return value
@@ -184,12 +189,12 @@ class Settings(BaseSettings):
 
         self.model_dir = resolve(self.model_dir)
         self.model_manifest = resolve(self.model_manifest) if self.model_manifest else self.model_dir / "registry.json"
-        self.experiments_dir = (
-            resolve(self.experiments_dir) if self.experiments_dir else self.model_dir / "experiments"
-        )
+        self.experiments_dir = resolve(self.experiments_dir) if self.experiments_dir else self.model_dir / "experiments"
         self.upload_dir = resolve(self.upload_dir)
         self.risk_policy_path = resolve(self.risk_policy_path)
 
+        if self.job_execution == "inline" and self.app_env != "test":
+            raise ValueError("JOB_EXECUTION=inline is only allowed when APP_ENV=test")
         if self.app_env == "production":
             if not self.cookie_secure:
                 raise ValueError("COOKIE_SECURE must be true in production")

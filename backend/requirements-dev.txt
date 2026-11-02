@@ -3,7 +3,7 @@
 
 pytest==9.1.1
 pytest-cov==7.1.0
-httpx==0.28.1
+httpx2==2.13.1        # HTTP client used by starlette.testclient (Starlette >= 1.x)
 ruff==0.17.0
 mypy==2.4.0
 pip-audit==2.10.1

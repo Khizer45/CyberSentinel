@@ -89,9 +89,7 @@ class InferenceEngine:
             raise InferenceError("the preprocessor produced non-finite values")
         return matrix
 
-    def predict(
-        self, features: pd.DataFrame, mode: AnalysisMode | str, *, keep_transformed: bool = False
-    ) -> InferenceOutput:
+    def predict(self, features: pd.DataFrame, mode: AnalysisMode | str, *, keep_transformed: bool = False) -> InferenceOutput:
         mode = self.check_mode(mode)
         frame = self.prepare(features)
         size = len(frame)

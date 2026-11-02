@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 
 from app.ml.artifacts.compatibility import current_runtime
+from app.ml.artifacts.golden import write_golden
 from app.ml.artifacts.integrity import safe_resolve, sha256_bytes, sha256_file
 from app.ml.artifacts.loader import bundle_from_objects, qualified_name
 from app.ml.artifacts.manifest import (
@@ -40,7 +41,6 @@ from app.ml.artifacts.manifest import (
     RegistryEntry,
 )
 from app.ml.artifacts.registry_io import upsert_entry
-from app.ml.artifacts.golden import write_golden
 from app.ml.constants import ModelType
 
 PREPROCESSOR_FILE = "preprocessor.joblib"

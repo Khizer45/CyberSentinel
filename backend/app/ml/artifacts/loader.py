@@ -212,9 +212,7 @@ def _load_component(bundle_dir: Path, artifact: ArtifactFile, max_bytes: int) ->
     return joblib.load(path)
 
 
-def load_bundle(
-    model_dir: Path, artifact_uri: str, expected: ExpectedBundle, *, max_artifact_bytes: int
-) -> LoadedBundle:
+def load_bundle(model_dir: Path, artifact_uri: str, expected: ExpectedBundle, *, max_artifact_bytes: int) -> LoadedBundle:
     """Verify and load a bundle. See the module docstring for the check sequence."""
     manifest, digest, bundle_dir = read_manifest(model_dir, artifact_uri, expected_sha256=expected.manifest_sha256)
 
@@ -225,12 +223,12 @@ def load_bundle(
     if expected.preprocessing_version and manifest.preprocessing_version != expected.preprocessing_version:
         raise ArtifactIncompatibleError("the manifest preprocessing version does not match the registered model")
 
-    uses_xgboost = bool(
-        manifest.components.classifier and "xgboost" in manifest.components.classifier.estimator_class.lower()
-    )
+    uses_xgboost = bool(manifest.components.classifier and "xgboost" in manifest.components.classifier.estimator_class.lower())
     problems = compatibility_problems(manifest.runtime, uses_xgboost=uses_xgboost)
     if problems:
-        raise ArtifactIncompatibleError("the model was exported with incompatible library versions", details={"problems": problems})
+        raise ArtifactIncompatibleError(
+            "the model was exported with incompatible library versions", details={"problems": problems}
+        )
 
     allowed = _allowed_types()
     preprocessor = _load_component(bundle_dir, manifest.preprocessing.artifact, max_artifact_bytes)

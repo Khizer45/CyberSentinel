@@ -7,14 +7,12 @@ fabricated number.
 
 from __future__ import annotations
 
-import io
 import math
 import time
 from collections import Counter
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any
 
-import joblib
 import numpy as np
 from numpy.typing import ArrayLike
 from sklearn.metrics import (
@@ -49,7 +47,7 @@ def classification_report_dict(y_true: ArrayLike, y_pred: ArrayLike, labels: Seq
         pa, ra, fa, _ = precision_recall_fscore_support(y_true, y_pred, labels=labels, average=average, zero_division=0)
         report[average] = {"precision": _f(pa), "recall": _f(ra), "f1": _f(fa)}
     report["labels"] = [str(label) for label in labels]
-    report["samples"] = int(len(y_true))
+    report["samples"] = len(y_true)
     return report
 
 
@@ -75,7 +73,11 @@ def counts_to_rates(*, tp: int, fp: int, tn: int, fn: int) -> dict[str, Any]:
 
     precision = ratio(tp, tp + fp)
     recall = ratio(tp, tp + fn)
-    f1 = _f(2 * precision * recall / (precision + recall)) if precision and recall else (0.0 if precision == 0 or recall == 0 else None)
+    f1 = (
+        _f(2 * precision * recall / (precision + recall))
+        if precision and recall
+        else (0.0 if precision == 0 or recall == 0 else None)
+    )
     return {
         "tp": tp,
         "fp": fp,
@@ -123,7 +125,9 @@ def multiclass_roc_auc_ovr(y_true: ArrayLike, proba: np.ndarray, classes: Sequen
     return {"per_class": per_class, "macro": _f(np.mean(valid)) if valid else None, "classes_evaluated": len(valid)}
 
 
-def threshold_analysis(y_true_binary: ArrayLike, scores: ArrayLike, thresholds: Iterable[float] | None = None) -> list[dict[str, Any]]:
+def threshold_analysis(
+    y_true_binary: ArrayLike, scores: ArrayLike, thresholds: Iterable[float] | None = None
+) -> list[dict[str, Any]]:
     """Precision/recall/F1/FPR at each threshold (``score ≥ t`` → malicious)."""
     y = np.asarray(y_true_binary, dtype=int)
     s = np.asarray(scores, dtype=float)
@@ -219,9 +223,3 @@ def measure_latency(predict: Callable[[Any], Any], data: Any, *, repeats: int = 
         "ms_per_record": _f(1000 * median / n) if n else None,
         "records_per_second": _f(n / median) if median > 0 else None,
     }
-
-
-def serialized_size_bytes(obj: Any) -> int:
-    buffer = io.BytesIO()
-    joblib.dump(obj, buffer, compress=3)
-    return buffer.getbuffer().nbytes

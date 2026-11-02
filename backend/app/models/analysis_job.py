@@ -25,9 +25,7 @@ class AnalysisJob(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
     dataset_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("datasets.id", ondelete="RESTRICT"), nullable=False)
     submitted_by: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
-    model_version_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("model_versions.id", ondelete="RESTRICT"), nullable=False
-    )
+    model_version_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("model_versions.id", ondelete="RESTRICT"), nullable=False)
     status: Mapped[str] = mapped_column(String(20), nullable=False, default=JobStatus.QUEUED.value)
     requested_mode: Mapped[str] = mapped_column(String(30), nullable=False)
     input_rows: Mapped[int | None] = mapped_column(BigInteger, nullable=True)

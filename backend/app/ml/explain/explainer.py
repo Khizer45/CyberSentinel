@@ -151,9 +151,7 @@ def explain_rows(
                     }
                 )
                 if len(reasons) < 5:
-                    reasons.append(
-                        deviation_reason(name, _clean(row[name]), _clean(baseline), deviation, name in categorical)
-                    )
+                    reasons.append(deviation_reason(name, _clean(row[name]), _clean(baseline), deviation, name in categorical))
             method_family = "heuristic"
 
         anomaly_block = None
@@ -170,9 +168,7 @@ def explain_rows(
         if output.needs_review[position] and clf_meta is not None and output.label_confidence is not None:
             reasons.insert(
                 0,
-                low_confidence_reason(
-                    float(output.label_confidence[position]), clf_meta.min_confidence, target_label
-                ),
+                low_confidence_reason(float(output.label_confidence[position]), clf_meta.min_confidence, target_label),
             )
 
         class_scores = None

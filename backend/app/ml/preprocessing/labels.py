@@ -98,15 +98,11 @@ def normalize_labels(labels: pd.DataFrame, schema: DatasetSchema) -> NormalizedL
                 )
             # Raw UNSW files leave attack_cat empty for normal traffic; only accept that when label == 0.
             if (binary_raw[empty] != 0).any():
-                raise LabelNormalizationError(
-                    "empty attack_cat on rows labelled as attacks", details={"column": "attack_cat"}
-                )
+                raise LabelNormalizationError("empty attack_cat on rows labelled as attacks", details={"column": "attack_cat"})
             keys = keys.where(~empty, "normal")
         fine, category = _map_keys(keys, UNSW_LABEL_MAP, column="attack_cat")
         binary = (category != BENIGN_LABEL).astype("int64")
         inconsistent = int((binary != binary_raw).sum()) if binary_raw is not None else 0
-        return NormalizedLabels(
-            original=original, fine=fine, category=category, binary=binary, inconsistent_rows=inconsistent
-        )
+        return NormalizedLabels(original=original, fine=fine, category=category, binary=binary, inconsistent_rows=inconsistent)
 
     raise LabelNormalizationError(f"no label normalization for family {schema.family}")

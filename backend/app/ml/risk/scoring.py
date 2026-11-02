@@ -64,9 +64,7 @@ def classifier_component(
 ) -> NDArray[np.float64]:
     """Expected attack severity: Σ over attack classes of probability × category weight."""
     proba = np.asarray(class_probabilities, dtype=np.float64)
-    weights = np.array(
-        [0.0 if c == benign_class else policy.category_weights.weight_for(c) for c in classes], dtype=np.float64
-    )
+    weights = np.array([0.0 if c == benign_class else policy.category_weights.weight_for(c) for c in classes], dtype=np.float64)
     return np.clip(proba @ weights, 0.0, 1.0)
 
 

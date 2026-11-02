@@ -30,9 +30,7 @@ from app.models._checks import in_values
 class Prediction(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "predictions"
 
-    analysis_job_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("analysis_jobs.id", ondelete="RESTRICT"), nullable=False
-    )
+    analysis_job_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("analysis_jobs.id", ondelete="RESTRICT"), nullable=False)
     record_index: Mapped[int] = mapped_column(BigInteger, nullable=False)
     predicted_label: Mapped[str] = mapped_column(String(100), nullable=False)
     probability: Mapped[float | None] = mapped_column(score_numeric(8, 7), nullable=True)

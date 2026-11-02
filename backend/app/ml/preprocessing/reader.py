@@ -72,6 +72,38 @@ def read_header(path: Path, encoding: str) -> list[str]:
     return header
 
 
+def validate_structure(path: Path, encoding: str, *, max_rows: int | None = None) -> int:
+    """Strict structural pass: every record must have exactly as many fields as the header.
+
+    pandas silently pads short rows and (with ``usecols``) ignores extra fields, so uploads are checked here first.
+    Blank lines are skipped (as pandas does). Returns the number of data records.
+    """
+    rows = 0
+    with path.open("r", encoding="utf-8-sig" if encoding == "utf-8" else encoding, newline="") as handle:
+        reader = csv.reader(handle, strict=True)
+        try:
+            header = next(reader)
+            expected = len(header)
+            for record in reader:
+                if not record:
+                    continue
+                rows += 1
+                if len(record) != expected:
+                    raise DatasetFormatError(
+                        f"data row {rows} has {len(record)} fields; the header has {expected}",
+                        details={"row": rows, "fields": len(record), "expected_fields": expected},
+                    )
+                if max_rows is not None and rows > max_rows:
+                    raise DatasetFormatError(
+                        f"the file exceeds the maximum of {max_rows:,} data rows", details={"max_rows": max_rows}
+                    )
+        except csv.Error as exc:
+            raise DatasetFormatError("malformed CSV quoting", details={"near_row": rows + 1}) from exc
+        except UnicodeDecodeError as exc:
+            raise DatasetFormatError("the file contains bytes that are invalid for its detected encoding") from exc
+    return rows
+
+
 @dataclass(frozen=True)
 class CsvLayout:
     """Resolved structure of a CSV file for a given schema."""

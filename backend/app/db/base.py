@@ -38,6 +38,4 @@ class CreatedAtMixin:
 
 
 class TimestampMixin(CreatedAtMixin):
-    updated_at: Mapped[datetime] = mapped_column(
-        UTCDateTime, nullable=False, default=utcnow, onupdate=utcnow, sort_order=101
-    )
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime, nullable=False, default=utcnow, onupdate=utcnow, sort_order=101)

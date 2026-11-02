@@ -11,6 +11,7 @@ from app.ml.preprocessing.reader import (
     inspect_csv,
     iter_canonical_chunks,
     read_header,
+    validate_structure,
 )
 from app.ml.preprocessing.transforms import ALLOWED_TRANSFORM_FUNCTIONS, signed_log1p
 
@@ -33,4 +34,5 @@ __all__ = [
     "read_header",
     "resolve_columns",
     "signed_log1p",
+    "validate_structure",
 ]

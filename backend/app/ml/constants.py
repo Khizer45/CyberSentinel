@@ -8,6 +8,7 @@ value is a breaking change and requires a new feature-schema / label-map version
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import Literal
 
 
 class DatasetFamily(StrEnum):
@@ -74,7 +75,7 @@ UNCLASSIFIED_LABEL = "unclassified"
 
 SPECIAL_PREDICTED_LABELS = frozenset({NEEDS_REVIEW_LABEL, UNCLASSIFIED_LABEL})
 
-ANOMALY_SCORE_DIRECTION = "higher_is_more_anomalous"
+ANOMALY_SCORE_DIRECTION: Literal["higher_is_more_anomalous"] = "higher_is_more_anomalous"
 
 EXPLANATION_DISCLAIMER = (
     "Feature attributions describe how the model used its inputs for this prediction. "

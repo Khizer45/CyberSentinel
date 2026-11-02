@@ -48,9 +48,7 @@ class CleaningStats:
         if not self.rows:
             return {}
         columns = set(self.non_numeric) | set(self.out_of_range)
-        return {
-            c: (self.non_numeric.get(c, 0) + self.out_of_range.get(c, 0)) / self.rows for c in sorted(columns)
-        }
+        return {c: (self.non_numeric.get(c, 0) + self.out_of_range.get(c, 0)) / self.rows for c in sorted(columns)}
 
     def to_dict(self) -> dict[str, object]:
         return {

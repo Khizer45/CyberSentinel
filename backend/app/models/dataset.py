@@ -45,9 +45,7 @@ class Dataset(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         CheckConstraint("row_count IS NULL OR row_count >= 0", name="row_count_nonnegative"),
         CheckConstraint("size_bytes IS NULL OR size_bytes >= 0", name="size_bytes_nonnegative"),
         CheckConstraint("sha256 IS NULL OR length(sha256) = 64", name="sha256_length"),
-        CheckConstraint(
-            "owner_user_id IS NOT NULL OR source_type <> 'upload'", name="owner_required_for_upload"
-        ),
+        CheckConstraint("owner_user_id IS NOT NULL OR source_type <> 'upload'", name="owner_required_for_upload"),
         Index("ix_datasets_owner_user_id_created_at", "owner_user_id", text("created_at DESC")),
         Index("ix_datasets_sha256", "sha256", postgresql_where=text("sha256 IS NOT NULL")),
         Index("ix_datasets_status", "status"),

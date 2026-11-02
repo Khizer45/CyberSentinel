@@ -24,8 +24,8 @@ from alembic.migration import MigrationContext
 from sqlalchemy import Engine, create_engine, inspect, text
 from sqlalchemy.exc import DBAPIError
 
-from app.db.base import Base
 import app.models  # noqa: F401
+from app.db.base import Base
 
 MIGRATION_URL = os.environ.get("TEST_POSTGRES_MIGRATION_URL")
 pytestmark = pytest.mark.skipif(not MIGRATION_URL, reason="TEST_POSTGRES_MIGRATION_URL not set")

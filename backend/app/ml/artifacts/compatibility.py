@@ -45,9 +45,7 @@ def compatibility_problems(recorded: RuntimeSection, *, uses_xgboost: bool) -> l
     current = current_runtime()
     problems: list[str] = []
     if _major_minor(recorded.scikit_learn) != _major_minor(current.scikit_learn):
-        problems.append(
-            f"scikit-learn {recorded.scikit_learn} was used for export but {current.scikit_learn} is installed"
-        )
+        problems.append(f"scikit-learn {recorded.scikit_learn} was used for export but {current.scikit_learn} is installed")
     if _major(recorded.numpy) != _major(current.numpy):
         problems.append(f"numpy major version {recorded.numpy} differs from installed {current.numpy}")
     if uses_xgboost:

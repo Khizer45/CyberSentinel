@@ -8,6 +8,7 @@ The policy turns model outputs into an **application policy score** on a 0–100
 from __future__ import annotations
 
 import json
+from itertools import pairwise
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -81,7 +82,7 @@ class RiskPolicy(_Strict):
         if tuple(names) != RISK_BAND_ORDER:
             raise ValueError("bands must list low, medium, high, critical in this order")
         mins = [band.min_score for band in self.bands]
-        if mins[0] != 0 or any(b <= a for a, b in zip(mins, mins[1:], strict=False)):
+        if mins[0] != 0 or any(b <= a for a, b in pairwise(mins)):
             raise ValueError("band min_score values must start at 0 and strictly increase")
         return self
 
