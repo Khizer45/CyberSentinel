@@ -1,0 +1,32 @@
+{
+  "policy_version": "1.0.0",
+  "description": "Default CyberSentinel risk policy. Weights, category multipliers, floors and band boundaries are PLACEHOLDER values that must be reviewed against validation data (notebook 06, section 'Risk policy evaluation') before operational use. The score is an application policy score on a 0-100 scale, not a probability.",
+  "weights": {
+    "classifier": 0.7,
+    "anomaly": 0.3
+  },
+  "category_weights": {
+    "default": 1.0,
+    "overrides": {
+      "PortScan": 0.6,
+      "Reconnaissance": 0.6,
+      "Fuzzers": 0.7,
+      "Analysis": 0.7
+    }
+  },
+  "floors": {
+    "anomaly": 25.0,
+    "needs_review": 25.0
+  },
+  "bands": [
+    {"name": "low", "min_score": 0},
+    {"name": "medium", "min_score": 25},
+    {"name": "high", "min_score": 50},
+    {"name": "critical", "min_score": 75}
+  ],
+  "alerting": {
+    "min_band": "high",
+    "alert_on_anomaly": false,
+    "alert_on_needs_review": false
+  }
+}
