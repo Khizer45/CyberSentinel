@@ -1,0 +1,14 @@
+# Shared ML runtime pins — installed by BOTH the backend and the notebooks.
+# Model artifacts are joblib/pickle files: the notebook environment that exports a bundle and the API
+# environment that loads it must use the same scikit-learn / xgboost / numpy versions. The bundle manifest
+# records these versions and the backend refuses incompatible artifacts (fail closed).
+# Versions chosen: newest releases at least three weeks old on 2026-11-02 (supply-chain hygiene).
+# Requires Python >= 3.12 (numpy 2.5, scipy 1.18, xgboost 3.4). Verified on Python 3.13.
+numpy==2.5.4
+pandas==3.0.6
+pyarrow==26.0.0
+scipy==1.18.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+joblib==1.6.0
+pydantic==2.14.1

@@ -1,0 +1,15 @@
+# CyberSentinel backend runtime dependencies (pinned).
+-r requirements-ml.txt
+
+fastapi==0.143.0
+starlette==1.7.0
+uvicorn==0.54.0
+pydantic-settings==2.15.0
+email-validator==2.3.0
+python-multipart==0.0.32
+sqlalchemy==2.1.4
+alembic==1.20.0
+psycopg[binary]==3.3.6
+argon2-cffi==25.1.0
+pyjwt==2.15.1
+anyio==4.15.1
