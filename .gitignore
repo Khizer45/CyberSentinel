@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------------------
+# Secrets & local configuration (never commit real credentials)
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Node / frontend
+# ---------------------------------------------------------------------------
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo
+
+# ---------------------------------------------------------------------------
+# Datasets, processed data and notebook outputs (large / licensed / private)
+# ---------------------------------------------------------------------------
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+reports/*
+!reports/README.md
+
+# ---------------------------------------------------------------------------
+# Model artifacts: binaries are produced locally by the notebooks.
+# Only the README, the empty registry template and folder placeholders are tracked.
+# ---------------------------------------------------------------------------
+model_artifacts/bundles/*
+!model_artifacts/bundles/.gitkeep
+model_artifacts/experiments/*
+!model_artifacts/experiments/.gitkeep
+model_artifacts/staging/
+*.joblib
+*.pkl
+*.pickle
+
+# ---------------------------------------------------------------------------
+# Runtime storage, logs, local databases
+# ---------------------------------------------------------------------------
+backend/storage/
+storage/
+uploads/
+*.log
+logs/
+*.sqlite
+*.sqlite3
+*.db
+
+# ---------------------------------------------------------------------------
+# Editors / OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
