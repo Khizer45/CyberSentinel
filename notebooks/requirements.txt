@@ -1,0 +1,12 @@
+# Notebook environment. The ML runtime pins are shared with the backend so that exported pickles load in the API.
+-r ../backend/requirements-ml.txt
+
+jupyterlab==4.6.4
+ipykernel==7.4.0
+matplotlib==3.11.2
+shap==0.53.0          # optional: SHAP summary plots in notebook 03
+
+# Notebook smoke tests (optional)
+pytest==9.1.1
+nbclient==0.11.0
+nbformat==5.11.1

@@ -1,0 +1,116 @@
+/* Design tokens. The resolved theme is written to <html data-theme="light|dark"> by ThemeProvider. */
+:root {
+  color-scheme: light;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-3: #eef2f7;
+  --border: #dfe5ee;
+  --border-strong: #c3cddb;
+  --text: #101828;
+  --text-muted: #556274;
+  --text-subtle: #8792a5;
+
+  --primary: #2f5bea;
+  --primary-hover: #2349c7;
+  --primary-soft: #e8eeff;
+  --primary-contrast: #ffffff;
+  --focus-ring: 0 0 0 3px rgb(47 91 234 / 0.35);
+
+  --success: #127a57;
+  --success-soft: #e2f5ec;
+  --warning: #9a5b00;
+  --warning-soft: #fff2d9;
+  --danger: #c0311e;
+  --danger-soft: #fde8e4;
+  --info: #1a6aad;
+  --info-soft: #e3f0fb;
+  --neutral: #4b5565;
+  --neutral-soft: #edf0f5;
+
+  --risk-low: #2a9d70;
+  --risk-medium: #c99106;
+  --risk-high: #e0641a;
+  --risk-critical: #c62828;
+
+  --chart-1: #2f5bea;
+  --chart-2: #e0641a;
+  --chart-3: #2a9d70;
+  --chart-4: #9c4fd6;
+  --chart-5: #c99106;
+  --chart-6: #1aa3b5;
+  --chart-grid: #e6eaf0;
+
+  --sidebar-bg: #0c1322;
+  --sidebar-border: #1a2438;
+  --sidebar-text: #b9c3d6;
+  --sidebar-text-strong: #ffffff;
+  --sidebar-hover: #162036;
+  --sidebar-active: #1d2a47;
+  --sidebar-accent: #7b97ff;
+
+  --shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06);
+  --shadow-md: 0 4px 14px rgb(16 24 40 / 0.08);
+  --shadow-lg: 0 22px 50px rgb(16 24 40 / 0.22);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --sidebar-width: 252px;
+  --topbar-height: 60px;
+  --content-max: 1440px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b111d;
+  --surface: #121a2a;
+  --surface-2: #162034;
+  --surface-3: #1c283f;
+  --border: #253250;
+  --border-strong: #34446a;
+  --text: #e7ecf5;
+  --text-muted: #a3afc4;
+  --text-subtle: #75839c;
+
+  --primary: #6f8cff;
+  --primary-hover: #8aa2ff;
+  --primary-soft: #1d2a52;
+  --primary-contrast: #0b111d;
+  --focus-ring: 0 0 0 3px rgb(111 140 255 / 0.45);
+
+  --success: #4cc996;
+  --success-soft: #11372b;
+  --warning: #f2b54a;
+  --warning-soft: #3a2c10;
+  --danger: #ff7a66;
+  --danger-soft: #42181a;
+  --info: #62b0f0;
+  --info-soft: #102c45;
+  --neutral: #b5bfd0;
+  --neutral-soft: #1f2a40;
+
+  --risk-low: #3fbf8c;
+  --risk-medium: #e8b53a;
+  --risk-high: #ff8a3d;
+  --risk-critical: #ff5a52;
+
+  --chart-1: #7b97ff;
+  --chart-2: #ff8a3d;
+  --chart-3: #3fbf8c;
+  --chart-4: #c08cff;
+  --chart-5: #e8b53a;
+  --chart-6: #3fc7d8;
+  --chart-grid: #222e47;
+
+  --sidebar-bg: #080d18;
+  --sidebar-border: #151f33;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 6px 18px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 22px 50px rgb(0 0 0 / 0.55);
+}
