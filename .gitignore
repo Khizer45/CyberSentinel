@@ -51,6 +51,7 @@ model_artifacts/bundles/*
 model_artifacts/experiments/*
 !model_artifacts/experiments/.gitkeep
 model_artifacts/staging/
+model_artifacts/demo/
 *.joblib
 *.pkl
 *.pickle

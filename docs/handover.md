@@ -67,6 +67,8 @@ CyberSentinel/
 
 ## 3. Bring-up checklist
 
+With Docker, follow the [Docker Guide](docker_guide.md) instead of steps 1–5 and 9. Without Docker:
+
 1. **Python environment** — `backend/.venv`, `pip install -r requirements.txt -c constraints.txt`
    ([Installation Guide §2](installation_guide.md#2-backend-environment)).
 2. **PostgreSQL** — create the UTF-8 database and the owner/runtime roles

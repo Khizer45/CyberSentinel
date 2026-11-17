@@ -52,7 +52,7 @@ checks on the commit you release and update the evidence register (§5).
 | NFR-03 | Dashboard queries use pagination and documented indexes | `limit ≤ 100` pagination on every list; indexes in the migration and `docs/database_documentation.md` §4.3 | pagination tests in `tests/api/test_datasets_api.py` and `tests/api/test_analysis_flow.py` | Partially verified — EXPLAIN-plan review on large tables not performed |
 | NFR-04 | Prediction traceable to model, preprocessing, feature schema and risk policy versions | `analysis_jobs.risk_policy_version`, `model_versions` (preprocessing and schema versions, manifest hash), job summary | `tests/api/test_analysis_flow.py` (traceability query) | Implemented · tests passed |
 | NFR-05 | Request/job correlation IDs and operational events in logs | `core/logging.py`, `core/middleware.py`, `core/context.py` | `tests/api/test_errors_and_security.py` (request IDs); log inspection during the E2E run | Implemented · tests passed |
-| NFR-06 | Local development runs frontend, backend and PostgreSQL separately without Docker | `docs/installation_guide.md`, `frontend/README.md`; no Docker files | Clean-sandbox run of PostgreSQL, Uvicorn and Vite as separate processes (browser smoke test) | Implemented · reviewed |
+| NFR-06 | Local development runs frontend, backend and PostgreSQL separately without Docker | `docs/installation_guide.md`, `frontend/README.md` (an optional Docker Compose setup was added later at the owner's request: `docs/docker_guide.md`) | Clean-sandbox run of PostgreSQL, Uvicorn and Vite as separate processes (browser smoke test) | Implemented · reviewed |
 
 ## 3. Security requirements
 
