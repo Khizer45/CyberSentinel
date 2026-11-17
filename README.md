@@ -46,7 +46,16 @@ or modified bundle makes analysis fail with a clear error instead of falling bac
 
 ## Getting started
 
-Requirements: Python ≥ 3.12, PostgreSQL ≥ 14 (UTF-8), Node.js ≥ 22.22. No Docker.
+**With Docker (nothing else to install):**
+
+```bash
+cp .env.docker.example .env        # set the passwords and secrets
+docker compose up -d --build       # http://localhost:8080
+```
+
+See the [Docker Guide](docs/docker_guide.md), including a demo model for trying the UI.
+
+**Without Docker:** Python ≥ 3.12, PostgreSQL ≥ 14 (UTF-8), Node.js ≥ 22.22.
 
 ```bash
 # backend
@@ -70,7 +79,8 @@ download the datasets into `data/raw/<family>/`, run the notebooks, and register
 
 | Guide | Covers |
 | --- | --- |
-| [Installation Guide](docs/installation_guide.md) | From a fresh machine to a running instance |
+| [Docker Guide](docs/docker_guide.md) | Run everything in containers (PostgreSQL, API, dashboard, JupyterLab) |
+| [Installation Guide](docs/installation_guide.md) | From a fresh machine to a running instance without Docker |
 | [Configuration Guide](docs/configuration_guide.md) | Every environment variable, production rules, notebook settings |
 | [Database Documentation](docs/database_documentation.md) | Provisioning, roles, migrations, schema, indexes, retention |
 | [Model Training Guide](docs/model_training_guide.md) | Datasets, notebooks, experiments and metrics |

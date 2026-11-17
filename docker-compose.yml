@@ -1,0 +1,82 @@
+# CyberSentinel with Docker: PostgreSQL + API + dashboard (+ optional JupyterLab for training).
+#
+#   cp .env.docker.example .env      # then set the passwords and secrets
+#   docker compose up -d --build     # dashboard: http://localhost:8080
+#   docker compose --profile notebooks up -d notebooks   # JupyterLab: http://localhost:8888
+#
+# Data lives in Docker volumes (pgdata, uploads); model bundles in ./model_artifacts on your computer.
+
+name: cybersentinel
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cybersentinel
+      POSTGRES_USER: cybersentinel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cybersentinel -d cybersentinel"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      LOG_JSON: "true"
+      DATABASE_URL: postgresql+psycopg://cybersentinel:${POSTGRES_PASSWORD}@db:5432/cybersentinel
+      AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET in .env}
+      IP_PSEUDONYMIZATION_KEY: ${IP_PSEUDONYMIZATION_KEY:-}
+      CORS_ORIGINS: ${PUBLIC_URL:-http://localhost:8080}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      TRUST_PROXY_HEADERS: "true"
+      MODEL_DIR: /models
+      UPLOAD_DIR: /data/uploads
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_DISPLAY_NAME: ${ADMIN_DISPLAY_NAME:-Administrator}
+    volumes:
+      - ./model_artifacts:/models
+      - uploads:/data/uploads
+    ports:
+      - "127.0.0.1:8000:8000"   # API + Swagger UI at http://localhost:8000/api/docs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/live')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+  notebooks:
+    profiles: ["notebooks"]
+    build:
+      context: .
+      dockerfile: notebooks/Dockerfile
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-}
+    volumes:
+      - ./:/workspace
+    ports:
+      - "127.0.0.1:8888:8888"
+
+volumes:
+  pgdata:
+  uploads:

@@ -1,0 +1,5 @@
+# Root build context is used only by notebooks/Dockerfile, which needs just the requirement files.
+*
+!backend/requirements-ml.txt
+!backend/constraints.txt
+!notebooks/requirements.txt

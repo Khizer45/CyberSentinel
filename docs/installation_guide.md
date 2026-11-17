@@ -1,7 +1,8 @@
 # Installation Guide
 
 This guide takes a fresh machine to a running CyberSentinel instance: database, API, trained model bundle, and the
-analyst dashboard. Nothing here uses Docker, and nothing connects to a database you have not created yourself.
+analyst dashboard without containers; nothing connects to a database you have not created yourself. To run
+everything in Docker instead, see the [Docker Guide](docker_guide.md).
 
 | Component | Version | Notes |
 | --- | --- | --- |
